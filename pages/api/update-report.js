@@ -6,17 +6,18 @@ import "firebase/firestore";
 export default withSession(async (req, res) => {
   const user = req.session.get("user");
   if (user) {
-    const { id, name, link } = req.body;
-    console.log(id, name, link);
+    const { id, name, link, type, description } = req.body;
+    const newData = {};
+    if (name) newData.name = name;
+    if (link) newData.link = link;
+    if (type) newData.type = type;
+    if (description) newData.description = description;
     initFirebase();
     const db = firebase.firestore();
     await db
       .collection("reports")
       .doc(id)
-      .update({
-          name,
-          link
-      })
+      .update(newData)
       .then(() => {
         console.log("Document successfully updated!");
         res.json({

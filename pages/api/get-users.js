@@ -9,41 +9,29 @@ export default withSession(async (req, res) => {
     initFirebase();
     const db = firebase.firestore();
     await db
-      .collection("reports")
+      .collection("users")
       .get()
       .then((querySnapshot) => {
-        let reports = [];
+        let users = [];
         querySnapshot.forEach((doc) => {
-          reports.push({
-            id: doc.id,
-            name: doc.data().name,
-            type: doc.data().type,
-            description: doc.data().description,
-            link:
-              doc.data().link ||
-              `https://robohash.org/${user.email}?set=set4&size=100x100`,
-            date: doc.data().date,
-          });
+          users.push({ ...doc.data(), id: doc.id });
         });
         res.json({
-          isLoggedIn: true,
-          reportGot: true,
-          reports,
+          usersGot: true,
+          users,
         });
       })
       .catch((error) => {
         console.error("Error reading document: ", error);
 
         res.json({
-          isLoggedIn: true,
-          reportGot: false,
+          usersGot: false,
           error: error.message,
         });
       });
   } else {
     res.json({
-      isLoggedIn: false,
-      reportCreated: false,
+      usersGot: false,
     });
   }
 });

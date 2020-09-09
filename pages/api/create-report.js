@@ -6,14 +6,14 @@ import "firebase/firestore";
 export default withSession(async (req, res) => {
   const user = req.session.get("user");
   if (user) {
-    const { name, link } = req.body;
-    console.log(name, link);
+    const { name, link, type } = req.body;
     initFirebase();
     const db = firebase.firestore();
     await db
       .collection("reports")
       .add({
         name,
+        type: type || 'sales',
         link:
           link || `https://robohash.org/${user.email}?set=set4&size=100x100`,
         date: new Date().toLocaleString(),

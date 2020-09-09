@@ -1,106 +1,85 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 import Router from "next/router";
 import useUser from "../lib/useUser";
 import fetchJson from "../lib/fetchJson";
-import Modal from "./Modal";
 
-const List = ({ type = "sales" }) => {
-  const [reports, setReports] = useState([]);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [modalInfo, setModalInfo] = useState(null);
+const Usuarios = () => {
+  const [users, setUsers] = useState([]);
   const { mutateUser, user } = useUser({
     redirectTo: "/login",
     redirectIfFound: false,
   });
 
   useEffect(() => {
-    const getreports = async () => {
+    const getUsers = async () => {
       await mutateUser(
-        fetchJson("/api/get-reports", {
+        fetchJson("/api/get-users", {
           headers: { "Content-Type": "application/json" },
         }).then((res) => {
           console.log(res);
-          setReports(res.reports.filter((report) => report.type === type));
+          setUsers(res.users);
         })
       );
     };
     try {
-      getreports();
+      getUsers();
     } catch (error) {
       console.error("An unexpected error happened:", error);
       setErrorMsg(error.data.message);
     }
   }, []);
   const handleToEdit = (e) => {
-    console.log(e.target.dataset.report);
-    localStorage.setItem("report", e.target.dataset.report);
-    Router.push("/dashboard/edit");
+    localStorage.setItem("user", e.target.dataset.user);
+    Router.push("/dashboard/edit-user");
   };
 
-  const handleToggleModal = (url) => {
-    setModalInfo(url);
-    setIsOpenModal(true);
-  };
-
-  const closeModal = () => setIsOpenModal(false);
   return (
     <div className="grid">
       <span>
-        <b>Report</b>
+        <b>Avatar</b>
       </span>
       <span>
-        <b>Descripcion</b>
+        <b>Nombre</b>
       </span>
       <span>
-        <b>Creado</b>
+        <b>Correo</b>
       </span>
       <span>
         <b>Acciones</b>
       </span>
-      {reports.length > 0 ? (
-        reports.map((report) => (
+      {users ? (
+        users.map((data) => (
           <>
-            <span>{report.name}</span>
-            <span>{report.description}</span>
-            <span>{report.date}</span>
+            <span style={{ display: "flex", justifyContent: "center" }}>
+              <img
+                src={
+                  data.photo ||
+                  `https://robohash.org/${data.email}?set=set4&size=48x48`
+                }
+                width="48px"
+                height="48px"
+              />
+            </span>
+            <span>{data.name}</span>
+            <span>{data.email}</span>
             <span>
-              <button
-                className="report__button"
-                onClick={(_) => handleToggleModal(report.link)}
-              >
-                Ver
-              </button>{" "}
-              {user && user.role === "ADMIN" && (
+              {user && user.role !== "USER" ? (
                 <button
                   className="report__button"
-                  data-report={JSON.stringify(report)}
-                  onClick={(e) => handleToEdit(e)}
+                  data-user={JSON.stringify(data)}
+                  onClick={handleToEdit}
                 >
                   Editar
                 </button>
+              ) : (
+                "No puedes editar"
               )}
             </span>
           </>
         ))
       ) : (
-        <span>No hay reportes aun</span>
+        <span>No hay usuarios aun</span>
       )}
-      <div
-        className="modal-parent"
-        style={{ display: isOpenModal ? "flex" : "none" }}
-      >
-        <Modal onClose={closeModal} show={isOpenModal}>
-          {modalInfo && modalInfo.includes("app.powerbi.com/reportEmbed") && (
-            <iframe
-              width="100%"
-              height="100%"
-              src={modalInfo}
-              frameborder="0"
-              allowFullScreen="true"
-            ></iframe>
-          )}
-        </Modal>
-      </div>
       <style jsx="true">{`
         .grid {
           margin: 10px;
@@ -159,4 +138,4 @@ const List = ({ type = "sales" }) => {
   );
 };
 
-export default List;
+export default Usuarios;

@@ -3,48 +3,44 @@ import useUser from "../lib/useUser";
 import fetchJson from "../lib/fetchJson";
 import Router from "next/router";
 
-const FormReport = ({ type }) => {
-  const { mutateUser } = useUser({
+const FormUser = () => {
+  const { mutateUser, user } = useUser({
     redirectTo: "/dashboard/home",
     redirectIfFound: false,
   });
   const [name, setName] = useState("");
   const [id, setId] = useState("");
-  const [url, setURL] = useState("");
-  const [description, setDescription] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    if (type === "edit") {
-      const report = JSON.parse(localStorage.getItem("report"));
-      if (!report || !report.name) throw Error("No Report in Local Storage");
-      setName(report.name);
-      setURL(report.link);
-      setId(report.id);
-    }
-  }, [type]);
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (!userData || !userData.name) throw Error("No User in Local Storage");
+    setName(userData.name);
+    setPhoto(userData.photo);
+    setEmail(userData.email);
+    setId(userData.id);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const body = {
       id,
       name: e.target.name.value,
-      link: e.target.url.value,
-      type: e.target.type.value,
-      description: e.target.description.value,
+      photo: e.target.photo.value,
+      role: e.target.role.value,
+      email: e.target.email.value,
     };
     console.log(body);
     try {
       await mutateUser(
-        fetchJson(
-          type === "create" ? "/api/create-report" : "/api/update-report",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          }
-        ).then((res) => {
+        fetchJson("/api/update-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }).then((res) => {
           console.log(res);
-          Router.push("/dashboard/home");
+          Router.push("/dashboard/users");
         })
       );
     } catch (error) {
@@ -52,58 +48,50 @@ const FormReport = ({ type }) => {
       setErrorMsg(error.data.message);
     }
   };
+  console.log(user)
   return (
     <div className="container">
-      {type === "create" ? (
-        <h1 className="report__title">Crear Reporte</h1>
-      ) : (
-        <h1 className="report__title">Actualizar Reporte</h1>
-      )}
-      <form className="form_container" onSubmit={handleSubmit} id="report">
+      <h1 className="report__title">Actualizar Usuario</h1>
+      <form className="form_container" onSubmit={handleSubmit} id="user">
         <input
           type="text"
           name="name"
           value={name}
           onChange={(e) => setName(e.value)}
-          placeholder="Nombre del Reporte"
+          placeholder="Nombre del Usuario"
           className="report__input"
         />
         <input
           type="text"
-          name="url"
-          value={url}
-          onChange={(e) => setURL(e.value)}
-          placeholder="Link a Power BI"
+          name="photo"
+          value={photo}
+          onChange={(e) => setPhoto(e.value)}
+          placeholder="Foto"
           className="report__input"
           required
         />
         <div className="report__type">
-          <select name="type" form="report">
-            <option value="sales">Ventas</option>
-            <option value="inventory">Inventario</option>
-            <option value="buys">Compras</option>
+          <select name="role" form="user">
+            <option value="USER">Usuario</option>
+            {user.role === "ADMIN" && (
+              <>
+                <option value="BOSS">Jefe</option>
+                <option value="ADMIN">Administrador</option>
+              </>
+            )}
           </select>
         </div>
         <textarea
-          name="description"
-          placeholder="Describe el reporte"
-          value={description}
-          onChange={(e) => setDescription(e.value)}
+          name="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.value)}
         />
         <hr />
         <button type="submit" className="report__action">
-          {type === "create" ? "Crear" : "Actualiza"}
+          Actualiza
         </button>
         <hr />
-        {url && url.includes("app.powerbi.com/reportEmbed") && (
-          <a
-            href={"https://powerbi.microsoft.com/en-us/landing/signin/"}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Edita in Power BI
-          </a>
-        )}
       </form>
 
       <style jsx="true">
@@ -132,8 +120,8 @@ const FormReport = ({ type }) => {
             border-radius: 4px;
             text-overflow: ellipsis;
             white-space: nowrap;
-			height: 40px;
-			margin: 0.3rem 0 1rem;
+            height: 40px;
+            margin: 0.3rem 0 1rem;
           }
           .report__type > select {
             background-color: transparent;
@@ -154,4 +142,4 @@ const FormReport = ({ type }) => {
   );
 };
 
-export default FormReport;
+export default FormUser;

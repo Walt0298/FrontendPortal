@@ -1,4 +1,4 @@
-const Home = ({ user }) => (
+const Home = () => (
   <>
     <div className="main_cards">
       <div className="card">

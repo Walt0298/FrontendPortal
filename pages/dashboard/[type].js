@@ -7,6 +7,8 @@ import Layout from "../../components/Dashboard";
 import Home from "../../components/Home";
 import List from "../../components/List";
 import FormReport from "../../components/FormReport";
+import Usuarios from "../../components/Usuarios";
+import FormUser from "../../components/FormUser";
 
 const DashBoard = ({ user }) => {
   const router = useRouter();
@@ -26,20 +28,57 @@ const DashBoard = ({ user }) => {
       </Layout>
     );
   }
-  if (type === "list") {
+  if (type === "inventory") {
     return (
       <Layout user={user}>
-        <h2 style={{ color: "black", padding:"20px"}}>Reportes</h2>;
-        <Link href="create"><button className="report__button">Crear Reporte</button></Link>
+        <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
+        <Link href="create">
+          <button className="report__button">Crear Reporte</button>
+        </Link>
         <List />
+      </Layout>
+    );
+  }
+  if (type === "sales") {
+    return (
+      <Layout user={user}>
+        <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
+        <Link href="create">
+          <button className="report__button">Crear Reporte</button>
+        </Link>
+        <List type="sales" />
+      </Layout>
+    );
+  }
+  if (type === "buys") {
+    return (
+      <Layout user={user}>
+        <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
+        <Link href="create">
+          <button className="report__button">Crear Reporte</button>
+        </Link>
+        <List type="sales" />
       </Layout>
     );
   }
   if (type === "edit") {
     return (
       <Layout user={user}>
-        <h1>Edit</h1>
         <FormReport type="edit" />
+      </Layout>
+    );
+  }
+  if (type === "edit-user") {
+    return (
+      <Layout user={user}>
+        <FormUser />
+      </Layout>
+    );
+  }
+  if (type === "users" && user.isLoggedIn) {
+    return (
+      <Layout user={user}>
+        <Usuarios />
       </Layout>
     );
   } else {

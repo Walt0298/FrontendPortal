@@ -6,29 +6,27 @@ import "firebase/firestore";
 export default withSession(async (req, res) => {
   const user = req.session.get("user");
   if (user) {
+    const { id, role, name, photo } = req.body;
+
+    if (!id) throw Error("ID not provided! Make sure to add it!");
     initFirebase();
+
+    const newData = {};
+    if (name) newData.name = name;
+    if (photo) newData.photo = photo;
+    if (role === "ADMIN" || role === "BOSS" || role === "USER")
+      newData.role = role;
+    console.log(id, newData);
     const db = firebase.firestore();
     await db
-      .collection("reports")
-      .get()
-      .then((querySnapshot) => {
-        let reports = [];
-        querySnapshot.forEach((doc) => {
-          reports.push({
-            id: doc.id,
-            name: doc.data().name,
-            type: doc.data().type,
-            description: doc.data().description,
-            link:
-              doc.data().link ||
-              `https://robohash.org/${user.email}?set=set4&size=100x100`,
-            date: doc.data().date,
-          });
-        });
+      .collection("users")
+      .doc(id)
+      .update(newData)
+      .then(() => {
+        console.log("Document successfully updated!");
         res.json({
           isLoggedIn: true,
-          reportGot: true,
-          reports,
+          userUpdated: true,
         });
       })
       .catch((error) => {
@@ -36,14 +34,14 @@ export default withSession(async (req, res) => {
 
         res.json({
           isLoggedIn: true,
-          reportGot: false,
+          userUpdated: false,
           error: error.message,
         });
       });
   } else {
     res.json({
       isLoggedIn: false,
-      reportCreated: false,
+      userUpdated: false,
     });
   }
 });

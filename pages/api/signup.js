@@ -31,9 +31,6 @@ export default withSession(async (req, res) => {
         photoURL:
           photo || `https://robohash.org/${email}?set=set4&size=100x100`,
       })
-      .then(function () {
-        console.log("user Updated", user);
-      })
       .catch(function (error) {
         console.error(error);
         throw Error(error.message);
@@ -50,7 +47,6 @@ export default withSession(async (req, res) => {
         date: new Date().toLocaleString(),
       })
       .then(() => {
-        console.log("Document successfully written!");
         res.json({
           isSignUp: true,
           userCreated: true,

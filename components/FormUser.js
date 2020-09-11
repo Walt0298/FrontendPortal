@@ -31,7 +31,6 @@ const FormUser = () => {
       role: e.target.role.value,
       email: e.target.email.value,
     };
-    console.log(body);
     try {
       await mutateUser(
         fetchJson("/api/update-user", {
@@ -39,7 +38,6 @@ const FormUser = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         }).then((res) => {
-          console.log(res);
           Router.push("/dashboard/users");
         })
       );
@@ -48,7 +46,6 @@ const FormUser = () => {
       setErrorMsg(error.data.message);
     }
   };
-  console.log(user)
   return (
     <div className="container">
       <h1 className="report__title">Actualizar Usuario</h1>
@@ -73,7 +70,7 @@ const FormUser = () => {
         <div className="report__type">
           <select name="role" form="user">
             <option value="USER">Usuario</option>
-            {user.role === "ADMIN" && (
+            {user && user.role === "ADMIN" && (
               <>
                 <option value="BOSS">Jefe</option>
                 <option value="ADMIN">Administrador</option>

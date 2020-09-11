@@ -16,7 +16,6 @@ const Usuarios = () => {
         fetchJson("/api/get-users", {
           headers: { "Content-Type": "application/json" },
         }).then((res) => {
-          console.log(res);
           setUsers(res.users);
         })
       );

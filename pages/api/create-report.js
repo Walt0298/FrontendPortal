@@ -19,7 +19,6 @@ export default withSession(async (req, res) => {
         date: new Date().toLocaleString(),
       })
       .then(() => {
-        console.log("Document successfully written!");
         res.json({
           isLoggedIn: true,
           reportCreated: true,

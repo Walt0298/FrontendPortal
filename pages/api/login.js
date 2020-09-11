@@ -29,7 +29,7 @@ export default withSession(async (req, res) => {
         });
       })
       .catch(function (error) {
-        console.log("Error getting documents: ", error);
+        console.error("Error getting documents: ", error);
       });
     const user = {
       isLoggedIn: true,

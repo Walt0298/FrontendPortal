@@ -4,10 +4,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import fetch from '../lib/fetchJson';
 
-Router.events.on('routeChangeStart', (url) => {
-	console.log(`Loading: ${url}`);
-	NProgress.start();
-});
+Router.events.on('routeChangeStart', (_) => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 

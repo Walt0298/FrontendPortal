@@ -32,7 +32,6 @@ const FormReport = ({ type }) => {
       type: e.target.type.value,
       description: e.target.description.value,
     };
-    console.log(body);
     try {
       await mutateUser(
         fetchJson(
@@ -43,7 +42,6 @@ const FormReport = ({ type }) => {
             body: JSON.stringify(body),
           }
         ).then((res) => {
-          console.log(res);
           Router.push("/dashboard/home");
         })
       );

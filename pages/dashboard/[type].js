@@ -32,9 +32,6 @@ const DashBoard = ({ user }) => {
     return (
       <Layout user={user}>
         <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
-        <Link href="create">
-          <button className="report__button">Crear Reporte</button>
-        </Link>
         <List />
       </Layout>
     );
@@ -43,9 +40,6 @@ const DashBoard = ({ user }) => {
     return (
       <Layout user={user}>
         <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
-        <Link href="create">
-          <button className="report__button">Crear Reporte</button>
-        </Link>
         <List type="sales" />
       </Layout>
     );
@@ -54,9 +48,6 @@ const DashBoard = ({ user }) => {
     return (
       <Layout user={user}>
         <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
-        <Link href="create">
-          <button className="report__button">Crear Reporte</button>
-        </Link>
         <List type="sales" />
       </Layout>
     );
@@ -75,7 +66,7 @@ const DashBoard = ({ user }) => {
       </Layout>
     );
   }
-  if (type === "users" && user.isLoggedIn) {
+  if (type === "users" && user.isLoggedIn && user.role === "ADMIN") {
     return (
       <Layout user={user}>
         <Usuarios />

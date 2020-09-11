@@ -16,14 +16,12 @@ export default withSession(async (req, res) => {
     if (photo) newData.photo = photo;
     if (role === "ADMIN" || role === "BOSS" || role === "USER")
       newData.role = role;
-    console.log(id, newData);
     const db = firebase.firestore();
     await db
       .collection("users")
       .doc(id)
       .update(newData)
       .then(() => {
-        console.log("Document successfully updated!");
         res.json({
           isLoggedIn: true,
           userUpdated: true,

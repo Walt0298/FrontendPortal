@@ -19,7 +19,6 @@ export default withSession(async (req, res) => {
       .doc(id)
       .update(newData)
       .then(() => {
-        console.log("Document successfully updated!");
         res.json({
           isLoggedIn: true,
           reportUpdated: true,

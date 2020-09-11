@@ -14,7 +14,6 @@ export default withSession(async (req, res) => {
       .doc(id)
       .delete()
       .then(() => {
-        console.log("Document successfully erased!");
         res.json({
           isErased: true,
         });

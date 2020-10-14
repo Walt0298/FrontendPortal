@@ -94,7 +94,7 @@ const List = ({ type = "sales" }) => {
           className="modal-parent"
           style={{ display: isOpenModal ? "flex" : "none" }}
         >
-          <Modal onClose={closeModal} show={isOpenModal}>
+          
             {modalInfo && modalInfo.includes("app.powerbi.com/reportEmbed") && (
               <iframe
                 width="100%"
@@ -104,7 +104,7 @@ const List = ({ type = "sales" }) => {
                 allowFullScreen="true"
               ></iframe>
             )}
-          </Modal>
+  
         </div>
         <style jsx="true">{`
           .grid {

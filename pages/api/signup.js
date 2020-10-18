@@ -5,11 +5,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 export default withSession(async (req, res) => {
-  const { email } = await req.body;
-  const { password } = await req.body;
-  const { name } = await req.body;
-  const { photo } = await req.body;
-  const { role } = await req.body;
+  const { email, password, name, photo, role, company } = await req.body;
 
   initFirebase();
 
@@ -22,6 +18,7 @@ export default withSession(async (req, res) => {
       isLoggedIn: true,
       id: credentials.user.uid,
       email: credentials.user.email,
+      company
     };
 
     const thisUser = firebase.auth().currentUser;
@@ -43,7 +40,8 @@ export default withSession(async (req, res) => {
         name: name,
         photo: photo || `https://robohash.org/${email}?set=set4&size=100x100`,
         role: role || "USER",
-        email: email,
+        email,
+        company,
         date: new Date().toLocaleString(),
       })
       .then(() => {

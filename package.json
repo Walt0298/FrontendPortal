@@ -1,6 +1,6 @@
 {
   "name": "nisira-portal",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "cross-env SECRET_COOKIE_PASSWORD=rMWpLQjBqY9be8NABHKybmgo7HurNCsk next dev",
@@ -8,12 +8,13 @@
     "start": "cross-env SECRET_COOKIE_PASSWORD=rMWpLQjBqY9be8NABHKybmgo7HurNCsk next start"
   },
   "dependencies": {
+    "cross": "^1.0.0",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
-    "firebase": "^7.18.0",
+    "firebase": "^7.24.0",
     "next": "9.3.6",
     "next-iron-session": "^4.1.2",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "16.13.1",

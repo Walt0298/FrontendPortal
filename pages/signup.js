@@ -22,12 +22,14 @@ const SignUp = () => {
 		const photo = e.currentTarget.photo.value;
 		const email = e.currentTarget.email.value;
 		const password = e.currentTarget.password.value;
+		const company = e.currentTarget.company.value;
 
 		const body = {
 			name,
 			photo,
 			email,
 			password,
+			company
 		};
 
 		try {

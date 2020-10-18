@@ -10,7 +10,7 @@ export default withSession(async (req, res) => {
     const db = firebase.firestore();
     await db
       .collection("reports")
-      .get()
+      .get() // TODO: filter by company of user
       .then((querySnapshot) => {
         let reports = [];
         querySnapshot.forEach((doc) => {
@@ -22,6 +22,7 @@ export default withSession(async (req, res) => {
             link:
               doc.data().link ||
               `https://robohash.org/${user.email}?set=set4&size=100x100`,
+            company: doc.data().company,
             date: doc.data().date,
           });
         });

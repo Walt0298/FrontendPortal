@@ -12,6 +12,7 @@ const FormUser = () => {
   const [id, setId] = useState("");
   const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -20,6 +21,7 @@ const FormUser = () => {
     setPhoto(userData.photo);
     setEmail(userData.email);
     setId(userData.id);
+    setCompany(userData.company);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -30,6 +32,7 @@ const FormUser = () => {
       photo: e.target.photo.value,
       role: e.target.role.value,
       email: e.target.email.value,
+      company: e.target.company.value
     };
     try {
       await mutateUser(
@@ -78,11 +81,21 @@ const FormUser = () => {
             )}
           </select>
         </div>
-        <textarea
+        <input
+          type="email"
           name="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.value)}
+          className="report__input"
+        />
+        <input
+          type="text"
+          name="company"
+          value={company}
+          onChange={(e) => setCompany(e.value)}
+          placeholder="Empresa del Usuario"
+          className="report__input"
         />
         <hr />
         <button type="submit" className="report__action">

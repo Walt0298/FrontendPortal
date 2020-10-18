@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }) {
 				<link rel="icon" href="/favicon.ico" />
 				<title>Nisira Portal</title>
 				<link rel="stylesheet" type="text/css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" />
+				<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/> 
 			</Head>
 			<style jsx global>{`
 				html {
@@ -38,9 +39,9 @@ function MyApp({ Component, pageProps }) {
 				body {
 					margin: 0;
 					color: #333;
-					font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+					font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
 						Noto Sans, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-						'Noto Color Emoji';
+						'Noto Color Emoji', sans-serif;
 				}
 
 				.container {

@@ -11,8 +11,10 @@ const Header = () => {
     <header >
       <nav>
         <ul>
+          <li>
+          </li>
           {!user?.isLoggedIn && (
-            <>
+            <div>
               <li>
                 <Link href="/login">
                   <a>Ingresar</a>
@@ -23,7 +25,7 @@ const Header = () => {
                   <a>Registrarse</a>
                 </Link>
               </li>
-            </>
+            </div>
           )}
           {user?.isLoggedIn && (
             <>
@@ -53,7 +55,16 @@ const Header = () => {
           display: flex;
           list-style: none;
           margin-left: 0;
-          padding-left: 0;
+          padding: 0 10px;
+          justify-content: space-between;
+        }
+
+        li:first-child {
+          marging-left: 20px;
+        }
+
+        ul>div {
+          display: flex;
         }
 
         li {
@@ -61,12 +72,10 @@ const Header = () => {
           display: flex;
         }
 
-        li:first-child {
-          margin-left: auto;
-        }
-
         a {
-          color: #fff;
+          background-color: #092425;
+          color: white;
+          padding: 5px 10px;
           text-decoration: none;
           display: flex;
           align-items: center;
@@ -80,7 +89,7 @@ const Header = () => {
           min-width:100%;
           padding: 0.2rem;
           color: #fff;
-          background-color: #233;
+          background-color: #092425;
         }
       `}</style>
     </header>

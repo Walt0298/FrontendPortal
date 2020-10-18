@@ -32,7 +32,7 @@ const DashBoard = ({ user }) => {
     return (
       <Layout user={user}>
         <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
-        <List />
+        <List type={type}/>
       </Layout>
     );
   }
@@ -40,7 +40,7 @@ const DashBoard = ({ user }) => {
     return (
       <Layout user={user}>
         <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
-        <List type="sales" />
+        <List type={type} />
       </Layout>
     );
   }
@@ -48,7 +48,7 @@ const DashBoard = ({ user }) => {
     return (
       <Layout user={user}>
         <h2 style={{ color: "black", padding: "20px" }}>Reportes</h2>;
-        <List type="sales" />
+        <List type={type} />
       </Layout>
     );
   }

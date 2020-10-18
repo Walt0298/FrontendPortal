@@ -4,7 +4,7 @@ import fetchJson from "../lib/fetchJson";
 import Router from "next/router";
 
 const FormReport = ({ type }) => {
-  const { mutateUser } = useUser({
+  const { mutateUser, user } = useUser({
     redirectTo: "/dashboard/home",
     redirectIfFound: false,
   });
@@ -20,6 +20,7 @@ const FormReport = ({ type }) => {
       setName(report.name);
       setURL(report.link);
       setId(report.id);
+      setDescription(report.description)
     }
   }, [type]);
 
@@ -31,6 +32,7 @@ const FormReport = ({ type }) => {
       link: e.target.url.value,
       type: e.target.type.value,
       description: e.target.description.value,
+      company: user.company
     };
     try {
       await mutateUser(
@@ -50,6 +52,7 @@ const FormReport = ({ type }) => {
       setErrorMsg(error.data.message);
     }
   };
+
   return (
     <div className="container">
       {type === "create" ? (

@@ -5,8 +5,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 export default withSession(async (req, res) => {
-  const { email } = await req.body;
-  const { password } = await req.body;
+  const { email, password } = await req.body;
 
   initFirebase();
 
@@ -19,13 +18,15 @@ export default withSession(async (req, res) => {
     const db = firebase.firestore();
 
     let role = "";
+    let company = "";
     await db
       .collection("users")
       .where("email", "==", email)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          role = doc.data().role
+          role = doc.data().role,
+          company = doc.data().company
         });
       })
       .catch(function (error) {
@@ -37,7 +38,8 @@ export default withSession(async (req, res) => {
       photoURL: credentials.user.photoURL,
       id: credentials.user.uid,
       email: credentials.user.email,
-      role
+      role,
+      company
     };
 
     req.session.set("user", user);

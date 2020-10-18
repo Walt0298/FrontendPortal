@@ -10,7 +10,7 @@ export default withSession(async (req, res) => {
     const db = firebase.firestore();
     await db
       .collection("users")
-      .get()
+      .get() // TODO: Filter by company
       .then((querySnapshot) => {
         let users = [];
         querySnapshot.forEach((doc) => {

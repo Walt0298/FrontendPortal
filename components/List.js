@@ -20,17 +20,16 @@ const List = ({ type = "sales" }) => {
         fetchJson("/api/get-reports", {
           headers: { "Content-Type": "application/json" },
         }).then((res) => {
-          setReports(res.reports.filter((report) => report.type === type));
+          setReports(res.reports.filter((report) => report.type === type && report.company === user.company));
         })
       );
     };
     try {
-      getreports();
+      if (user) getreports();
     } catch (error) {
       console.error("An unexpected error happened:", error);
-      setErrorMsg(error.data.message);
     }
-  }, []);
+  }, [user]);
   const handleToEdit = (e) => {
     localStorage.setItem("report", e.target.dataset.report);
     Router.push("/dashboard/edit");
@@ -94,7 +93,7 @@ const List = ({ type = "sales" }) => {
           className="modal-parent"
           style={{ display: isOpenModal ? "flex" : "none" }}
         >
-          
+           onClose={closeModal} show={isOpenModal}
             {modalInfo && modalInfo.includes("app.powerbi.com/reportEmbed") && (
               <iframe
                 width="100%"
@@ -104,7 +103,7 @@ const List = ({ type = "sales" }) => {
                 allowFullScreen="true"
               ></iframe>
             )}
-  
+      
         </div>
         <style jsx="true">{`
           .grid {

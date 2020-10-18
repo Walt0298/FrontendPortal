@@ -3,6 +3,7 @@ import Link from "next/link";
 import useUser from "../lib/useUser";
 import { useRouter } from "next/router";
 import fetchJson from "../lib/fetchJson";
+import { version } from '../package.json';
 
 const Layout = ({ user, children }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -16,7 +17,7 @@ const Layout = ({ user, children }) => {
         <strong> &#9776;</strong>
       </div>
       <header className="header">
-        <div className="header_search"></div>
+        <div className="header_search">{version}</div>
         <div className="header_avatar">
           {user?.isLoggedIn ? (
             <ul>
@@ -69,14 +70,14 @@ const Layout = ({ user, children }) => {
         <ul className="aside_list">
           <Link href="/dashboard/home">
             <li className="aside_list-item">
-              <img src="/dashboard.svg" className="dash__icon" />
+            <img src="https://img.icons8.com/cotton/64/000000/combo-chart--v2.png" className="dash__icon" />
               <a>Principal</a>
             </li>
           </Link>
           {user && user.role === "ADMIN" && (
             <Link href="/dashboard/users">
               <li className="aside_list-item">
-                <img src="/dashboard.svg" className="dash__icon" />
+              <img src="https://img.icons8.com/cotton/64/000000/business-group.png" className="dash__icon" />
                 <a>Usuarios</a>
               </li>
             </Link>
@@ -84,7 +85,7 @@ const Layout = ({ user, children }) => {
           <li className="aside_list-item">
             <details>
               <summary>
-                <img src="/paper.svg" className="dash__icon" />
+              <img src="https://img.icons8.com/cotton/64/000000/report-file--v1.png" className="dash__icon" />
                 Reportes
               </summary>
               <div className="reportes">
@@ -317,6 +318,7 @@ const Layout = ({ user, children }) => {
 
         .header_search {
           margin-left: 24px;
+          color: white;
         }
 
         .aside_close-icon {

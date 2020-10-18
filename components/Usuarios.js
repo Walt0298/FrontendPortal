@@ -11,22 +11,21 @@ const Usuarios = () => {
   });
 
   useEffect(() => {
-    const getUsers = async () => {
-      await mutateUser(
-        fetchJson("/api/get-users", {
+    const getUsers = async() => {
+      mutateUser(
+        await fetchJson("/api/get-users", {
           headers: { "Content-Type": "application/json" },
         }).then((res) => {
-          setUsers(res.users);
+          setUsers(res.users && res.users.filter(u=>u.company===user.company));
         })
       );
     };
     try {
-      getUsers();
+      if (user) getUsers();
     } catch (error) {
       console.error("An unexpected error happened:", error);
-      setErrorMsg(error.data.message);
     }
-  }, []);
+  }, [user]);
   const handleToEdit = (e) => {
     localStorage.setItem("user", e.target.dataset.user);
     Router.push("/dashboard/edit-user");
@@ -137,4 +136,4 @@ const Usuarios = () => {
   );
 };
 
-export default Usuarios;
+export default React.memo(Usuarios);

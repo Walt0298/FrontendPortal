@@ -7,6 +7,7 @@ const Home = () => (
           src="/logo.png"
           style={{ width: "50%", height: "50%" }}
         />
+        {/* TODO: Add company somehow */}
       </div>
     </div>
     <style jsx>{`

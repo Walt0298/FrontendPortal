@@ -6,7 +6,7 @@ import "firebase/firestore";
 export default withSession(async (req, res) => {
   const user = req.session.get("user");
   if (user) {
-    const { id, role, name, photo } = req.body;
+    const { id, role, name, photo, company } = req.body;
 
     if (!id) throw Error("ID not provided! Make sure to add it!");
     initFirebase();
@@ -14,6 +14,7 @@ export default withSession(async (req, res) => {
     const newData = {};
     if (name) newData.name = name;
     if (photo) newData.photo = photo;
+    if (company) newData.company = company;
     if (role === "ADMIN" || role === "BOSS" || role === "USER")
       newData.role = role;
     const db = firebase.firestore();
